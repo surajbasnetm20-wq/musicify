@@ -1,0 +1,8 @@
+create table if not exists public.musicify_rooms (code uuid primary key default gen_random_uuid(), created_at timestamptz not null default now(), tracks jsonb not null default '[]');
+alter table public.musicify_rooms enable row level security;
+revoke all on public.musicify_rooms from anon, authenticated;
+create or replace function public.musicify_create() returns uuid language sql security definer set search_path='' as $$ insert into public.musicify_rooms default values returning code $$;
+create or replace function public.musicify_read(room_code uuid) returns jsonb language plpgsql security definer set search_path='' as $$ declare result jsonb; begin select tracks into result from public.musicify_rooms where code=room_code and created_at>now()-interval '24 hours'; if result is null then raise exception 'Room unavailable or expired'; end if; return result; end $$;
+create or replace function public.musicify_add(room_code uuid, track jsonb) returns void language plpgsql security definer set search_path='' as $$ begin if jsonb_typeof(track)<>'object' or length(track::text)>4000 or coalesce(track->>'url','') not like 'https://%' then raise exception 'Invalid track'; end if; update public.musicify_rooms set tracks=tracks||jsonb_build_array(track) where code=room_code and created_at>now()-interval '24 hours' and jsonb_array_length(tracks)<100; if not found then raise exception 'Room unavailable or full'; end if; end $$;
+revoke all on function public.musicify_create(), public.musicify_read(uuid), public.musicify_add(uuid,jsonb) from public;
+grant execute on function public.musicify_create(), public.musicify_read(uuid), public.musicify_add(uuid,jsonb) to anon, authenticated;

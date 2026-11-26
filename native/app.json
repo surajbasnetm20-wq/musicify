@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "name": "Musicify",
+    "slug": "musicify",
+    "version": "1.0.0",
+    "ios": {
+      "bundleIdentifier": "com.pulse.personal.music",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "audio"
+        ]
+      }
+    },
+    "plugins": [
+      [
+        "expo-audio",
+        {
+          "enableBackgroundPlayback": true
+        }
+      ]
+    ],
+    "icon": "./icon.png"
+  }
+}

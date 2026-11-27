@@ -1,0 +1,7 @@
+Musicify 9.1 — Audio Studio
+Based on 9.0 Lyrics, retaining all original scripts and storage keys.
+Adds optional single-stream fade-out (off by default), and an Audio Studio shortcut.
+Not overlapping crossfade or beat-matched AutoMix. iOS may ignore media volume.
+Existing device data remains on the same origin; do not clear site data.
+Source archives do not include device playlists or imported audio.
+Live playback and iPhone testing pending.

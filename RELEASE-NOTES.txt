@@ -13,3 +13,5 @@ Live playback and iPhone testing pending.
 9.4: Experimental two-stream overlap with primary player handoff; off by default. Not seamless or beat-matched AutoMix. Browser playback untested.
 
 9.5: Optional Internet Archive search for original MP3 files with explicit CC BY, CC BY-SA, CC0 or public-domain marks. Enable under Settings. Search and DJ use the expanded provider function. Audiomack and SoundCloud external links only; authorised API access pending. Live endpoints and iPhone playback not tested. Existing storage keys unchanged.
+
+10.0: Premium presentation, recent history, collapsible import and settings. Existing database unchanged. Browser and iPhone runtime not tested.

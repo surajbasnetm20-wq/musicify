@@ -1,0 +1,1 @@
+10.2–10.5 cumulative release. Local artist taste, related mixes, ranked provider results, source filters, short-lived search cache, manual playback retry and Media Session artwork/actions. No guaranteed iOS background playback; no live tests. Existing storage and SQL retained.

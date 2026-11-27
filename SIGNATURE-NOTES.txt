@@ -1,0 +1,1 @@
+Musicify 10.0 Signature: cumulative visual redesign of 10.0. No storage keys or database changes. Existing provider and playback limitations remain. Upload all application files, retaining same GitHub Pages URL. No Supabase SQL rerun required.

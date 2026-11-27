@@ -1,6 +1,6 @@
 // Cumulative presentation upgrade. Existing storage and player remain unchanged.
 let recent100=read('recent100',[]); if(!Array.isArray(recent100))recent100=[];
-audio.addEventListener('playing',()=>{if(!current?.id)return;recent100=[current.id,...recent100.filter(id=>id!==current.id)].slice(0,30);save('recent100',recent100);});
+audio.addEventListener('playing',()=>{if(window.privateMode120||!current?.id)return;recent100=[current.id,...recent100.filter(id=>id!==current.id)].slice(0,30);save('recent100',recent100);});
 const icons100={Home:'<path d="m3 10 9-7 9 7v10h-6v-7H9v7H3z"/>',Charts:'<path d="M4 20V11h4v9m2 0V4h4v16m2 0v-6h4v6"/>',Library:'<path d="M4 4v16M9 4v16M14 4l6 16"/>',Discover:'<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>'};
 function group100(parent,title,nodes,open=false){if(!nodes.length)return;const d=document.createElement('details');d.className='group100';d.open=open;const s=document.createElement('summary');s.textContent=title;d.append(s,...nodes);parent.append(d);}
 const render100=render;render=function(){render100();const p=$('panel');if(!p)return;for(const b of $('nav').querySelectorAll('button')){const i=icons100[b.dataset.tab];if(i)b.querySelector('.nav85icon').innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true">'+i+'</svg>';if(b.classList.contains('active'))b.setAttribute('aria-current','page');}

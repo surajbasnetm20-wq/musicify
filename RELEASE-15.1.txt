@@ -1,0 +1,1 @@
+Local taste ranking: recent listening decays over 30 days; liked tracks and followed artists boost ranking. New to you excludes IDs in local history, not necessarily new releases. Provider search terms are sent to existing providers. No playback or storage schema changes. Device testing required.

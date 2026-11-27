@@ -1,0 +1,2 @@
+Musicify 14.9.0 — Discovery Edition
+Adds on-demand playable catalogue exploration and listening-history-based artist searches. Regional chips are keyword discovery, not official charts. YouTube results have an explicit Find audio action; matches are not guaranteed. Existing playback engine, storage and backend unchanged. No new paid services. Live provider and iPhone regression testing required.

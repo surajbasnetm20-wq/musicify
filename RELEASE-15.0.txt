@@ -1,0 +1,1 @@
+15.0 Premium UI and Performance preview. Compact player, secondary player tools disclosure, lazy artwork with fallback, keyboard labels, reduced motion and coalesced concurrent catalogue requests. Existing audio engine and storage unchanged. No new provider. Browser/iPhone regression tests required.

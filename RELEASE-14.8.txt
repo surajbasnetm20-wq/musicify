@@ -1,0 +1,4 @@
+Musicify 14.8.0 — Clean UI Edition (preview)
+Install by replacing the existing repository files, commit and push to Cloudflare. Keep the same origin and back up library metadata and original audio files first. No backend redeployment needed.
+New: compact navigation and player, reorganised home, library shortcuts and collapsible tools, regional chart links grouped, clearer playable versus discovery search sections, query restoration across incidental renders, visible-result count, and hiding compilation resumes without deleting them.
+The existing audio engine and provider configuration are unchanged. No new paid service. Jamendo zero results remains unresolved; YouTube is discovery only unless an authorised provider is configured. Native iPhone and live API regression testing still required. Browser smoke test could not run because navigation was blocked by the environment; JavaScript syntax and archive integrity checked.

@@ -1,0 +1,1 @@
+Musicify 13.1: internal official YouTube video playback in Discover. Search uses the existing restricted API key; paste links without a search key. Embedded videos must remain visible; lock-screen playback applies only to authorised audio sources. Some videos prohibit embedding. Existing storage and origin retained. Live iPhone testing required.

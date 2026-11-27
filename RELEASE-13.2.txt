@@ -1,0 +1,1 @@
+13.2: authorised HTTPS audio entry and Media Session controls inspired by ytify. YouTube embedded playback remains foreground-only. No extraction backend. Test on iPhone; URLs must serve playable audio. Existing library storage retained.

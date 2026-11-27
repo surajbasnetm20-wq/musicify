@@ -1,0 +1,5 @@
+1. In your existing Supabase project, open SQL Editor, New query, paste connect96.sql and Run. No new key required.
+2. Upload the app files to the existing GitHub Pages repository (SQL and TXT files can be kept locally). Commit, reopen app. Do not clear storage.
+3. Open Home > Listen together (Jam), or Settings/More. Host on this device, copy pairing code. On second device open Connect, paste code and Pair as remote. Keep host foregrounded. Tap Listen together for approximate synchronized streaming. Browser autoplay may require tapping Play locally.
+4. Pairing code grants remote control for 24 hours; share privately. Disconnect stops local polling, not server-side access. New host creates a new code. This is a private prototype, no account authentication or rate limiting. Do not use for public deployment without hardening.
+5. Existing shared Jam queue remains separate. Connect syncs host track and position, not queue contents. Local files are not shared. Polling every 2 seconds, not sample-accurate, background operation not guaranteed. Rapid commands may overwrite each other. SQL and live device playback have not been tested against Supabase/iPhone.

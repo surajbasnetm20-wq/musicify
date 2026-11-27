@@ -5,3 +5,11 @@ Not overlapping crossfade or beat-matched AutoMix. iOS may ignore media volume.
 Existing device data remains on the same origin; do not clear site data.
 Source archives do not include device playlists or imported audio.
 Live playback and iPhone testing pending.
+
+9.2: Added About the Song with MusicBrainz recording/work relationships, conservative matching and local metadata cache. No generated song stories. Live API and iPhone tests pending.
+
+9.3: Local prompt parsing, multi-provider mixes, voice input where supported, play and save mix. No generative AI or guaranteed mood matches.
+
+9.4: Experimental two-stream overlap with primary player handoff; off by default. Not seamless or beat-matched AutoMix. Browser playback untested.
+
+9.5: Optional Internet Archive search for original MP3 files with explicit CC BY, CC BY-SA, CC0 or public-domain marks. Enable under Settings. Search and DJ use the expanded provider function. Audiomack and SoundCloud external links only; authorised API access pending. Live endpoints and iPhone playback not tested. Existing storage keys unchanged.

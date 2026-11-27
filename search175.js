@@ -1,0 +1,11 @@
+// Search helpers shared by browser and deterministic tests.
+const norm175=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{M}\p{N}]+/gu,' ').trim();
+const consonants175=Object.fromEntries([... 'कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह'].map((c,i)=>[c,'k kh g gh ng ch chh j jh ny t th d dh n t th d dh n p ph b bh m y r l v sh sh s h'.split(' ')[i]]));
+const vowels175={'अ':'a','आ':'aa','इ':'i','ई':'ii','उ':'u','ऊ':'uu','ए':'e','ऐ':'ai','ओ':'o','औ':'au','ऋ':'ri','ा':'aa','ि':'i','ी':'ii','ु':'u','ू':'uu','े':'e','ै':'ai','ो':'o','ौ':'au','ृ':'ri','ं':'n','ँ':'n','ः':'h'};
+function roman175(s){const a=[...norm175(s)];return a.map((c,i)=>consonants175[c]!==undefined?consonants175[c]+((a[i+1]==='्'||vowels175[a[i+1]]||!a[i+1]||a[i+1]===' ')?'':'a'):c==='्'||c==='़'?'':vowels175[c]??c).join('')}
+const phon175=s=>roman175(s).replace(/aa/g,'a').replace(/ii|ee/g,'i').replace(/uu|oo/g,'u').replace(/w/g,'v').replace(/\s/g,'');
+function distance175(a,b){let r=Array.from({length:b.length+1},(_,i)=>i);for(let i=1;i<=a.length;i++){let n=[i];for(let j=1;j<=b.length;j++)n[j]=Math.min(n[j-1]+1,r[j]+1,r[j-1]+(a[i-1]!==b[j-1]));r=n}return r[b.length]}
+function score175(t,q){const a=norm175(t.title),b=norm175(t.artist||t.channel),n=norm175(q),p=phon175(q);if(!n)return 0;if(a===n)return 200;if(b===n)return 190;if(a+' '+b===n||b+' '+a===n)return 185;if(p&&(phon175(a)===p||phon175(b)===p))return 175;const words=n.split(' '),all=a+' '+b;if(all.includes(n))return 120;if(words.every(w=>all.includes(w)))return 100;const candidates=[a,b,...all.split(' ')].map(phon175).filter(Boolean);const d=Math.min(...candidates.map(x=>distance175(x,p)));return p.length>=4&&d<=Math.min(2,Math.floor(p.length/4))?70-d:0}
+const unwanted175=/\b(podcast|audiobook|interview|sermon|lecture|speech|spoken word|news report|talk show|language lesson|food chains|murli|compilation|nonstop collection)\b/i;
+function rank175(items,q){const seen=new Set();return items.filter(t=>t?.title&&!unwanted175.test([t.title,t.artist,t.channel,t.genre].join(' '))).sort((a,b)=>score175(b,q)-score175(a,q)).filter(t=>{const artist=norm175(t.artist||t.channel);const k=artist?norm175(t.title)+'|'+artist:String(t.id);if(seen.has(k))return false;seen.add(k);return true})}
+if(typeof module!=='undefined')module.exports={roman175,phon175,distance175,score175,rank175};

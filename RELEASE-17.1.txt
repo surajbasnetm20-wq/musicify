@@ -1,0 +1,1 @@
+17.1 Feature Access Preview: exposes existing DJ, playlist, lyrics, offline, Jam/Connect and driving tools. No audio or storage changes. Live provider and iPhone testing required.

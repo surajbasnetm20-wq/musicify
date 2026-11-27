@@ -1,24 +1,17 @@
-// Independent implementation of the persistent audio / Media Session pattern.
-const adapter145='musicifyAdapter145';
-const oldResolve145=resolve140;
+// 14.6: authorised JSON providers, session-only URL cache and failover.
+const provider146Key='musicifyProviders146';
+const cache146=new Map();let diagnostic146='No provider tested';
+function providers146(){let list=[];try{list=JSON.parse(localStorage.getItem(provider146Key)||'[]')}catch{}return [...new Set([localStorage.getItem(stream140Key),...(Array.isArray(list)?list:[])].filter(x=>endpoint140(x)))].slice(0,5)}
+function diag146(s){diagnostic146=s;const el=$('diag146');if(el)el.textContent=s;}
 resolve140=async function(t){
- if(localStorage.getItem(adapter145)!=='adaptive')return oldResolve145(t);
- const base=endpoint140(localStorage.getItem(stream140Key)||'');
- if(!base)throw Error('Configure a permitted adaptive-format provider in Settings');
- if(!/^[\w-]{11}$/.test(t.id))throw Error('Invalid song ID');
- base.pathname=base.pathname.replace(/\/$/,'')+'/api/v1/videos/'+t.id;
- const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),120000);
- try{
- const r=await fetch(base,{signal:ctrl.signal,credentials:'omit',headers:{Accept:'application/json'}});
- if(!r.ok)throw Error('Provider HTTP '+r.status);
- const j=await r.json();
- const formats=(Array.isArray(j.adaptiveFormats)?j.adaptiveFormats:[]).map(f=>({url:f.url,mimeType:f.type,bitrate:Number(f.bitrate)||0}));
- const f=choose140(formats,quality141());if(!f)throw Error('No iPhone-compatible audio format');
- const track={id:'provider:'+t.id,providerId:t.id,title:t.title,artist:t.channel||'',kind:'Licensed audio',url:f.url,art:'https://i.ytimg.com/vi/'+t.id+'/hqdefault.jpg'};
- if(!song123(track))throw Error('Music validation failed');return track;
- }finally{clearTimeout(timer)}
+ const providers=providers146(),quality=quality141();if(!providers.length)throw Error('No authorised audio provider configured. Discovery alone cannot play audio.');
+ const key=JSON.stringify([t.id,quality,providers]);const hit=cache146.get(key);if(hit&&Date.now()-hit.time<20000)return hit.track;
+ let errors=[];for(const base of providers){const u=endpoint140(base);u.searchParams.set('id',t.id);u.searchParams.set('quality',quality);const ctrl=new AbortController(),timer=setTimeout(()=>ctrl.abort(),15000);
+ try{diag146('Connecting to '+u.hostname);const r=await fetch(u,{signal:ctrl.signal,credentials:'omit',cache:'no-store',headers:{Accept:'application/json'}});if(!r.ok)throw Error('HTTP '+r.status);const j=await r.json();if(j.authorized!==true||j.music!==true||j.id!==t.id)throw Error('Permission or track validation failed');const f=choose140(Array.isArray(j.audio)?j.audio:[],quality);if(!f)throw Error('No supported audio codec');const track={id:'provider:'+t.id,providerId:t.id,title:j.title||t.title,artist:j.artist||t.channel||'',kind:'Licensed audio',url:f.url,art:'https://i.ytimg.com/vi/'+t.id+'/hqdefault.jpg'};if(!song123(track))throw Error('Music validation failed');cache146.set(key,{time:Date.now(),track});if(cache146.size>30)cache146.delete(cache146.keys().next().value);diag146('Resolved '+u.hostname+' · '+f.mimeType+' · '+quality);last141=diagnostic146;return track;}catch(e){errors.push(u.hostname+': '+e.message)}finally{clearTimeout(timer)}}throw Error(errors.join('; '));
 };
-const render145=render;render=function(){render145();if(!['More','Settings'].includes(tab))return;const p=$('panel'),s=document.createElement('section');s.innerHTML='<h3>14.5 · Playback adapter</h3><p>Use an audio provider you have permission to access. Adaptive mode accepts an Invidious-compatible API base URL in the existing provider field. No provider is bundled.</p><label>Provider format <select id="adapter145"><option value="licensed">Musicify authorised JSON</option><option value="adaptive">Adaptive formats API</option></select></label><p id="state145" role="status"></p>';p.append(s);$('adapter145').value=localStorage.getItem(adapter145)||'licensed';$('adapter145').onchange=()=>{localStorage.setItem(adapter145,$('adapter145').value);stop141();$('state145').textContent='Saved. Configure provider endpoint above.'};};
-// Keep native media controls in sync with the actual audio element.
 for(const event of ['playing','pause','loadedmetadata','seeked','ratechange','timeupdate'])audio.addEventListener(event,()=>{if(!ytCurrent)session132()});
-audio.preload='auto';render();
+audio.addEventListener('error',()=>cache146.clear(),true);audio.preload='auto';
+const render146=render;render=function(){render146();if(!['More','Settings'].includes(tab))return;const s=document.createElement('section');s.innerHTML='<h3>14.6 · Audio provider manager</h3><p>Enter authorised Musicify JSON endpoints, one per line. Primary provider is configured above. Audio does not silently switch to video.</p><textarea id="providers146" rows="4" placeholder="https://your-provider.example/resolve"></textarea><button id="save146">Save fallback providers</button><p id="diag146" role="status"></p><small id="codec146"></small>';$('panel').append(s);$('providers146').value=providers146().filter(x=>x!==localStorage.getItem(stream140Key)).join('\n');$('diag146').textContent=diagnostic146;$('codec146').textContent=['audio/mp4; codecs="mp4a.40.2"','audio/webm; codecs="opus"','audio/mpeg'].map(x=>x+': '+(audio.canPlayType(x)||'unsupported')).join(' · ');$('save146').onclick=()=>{const list=$('providers146').value.split(/\s+/).filter(Boolean);if(list.length>4||list.some(x=>!endpoint140(x)))return diag146('Enter up to four valid HTTPS endpoints');localStorage.setItem(provider146Key,JSON.stringify(list));cache146.clear();stop141();diag146('Fallback providers saved')};};
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(['save140','retry141'].includes(b.id))cache146.clear();if(b.dataset.ytopen130!==undefined){e.preventDefault();e.stopImmediatePropagation();const t=ytItems130[+b.dataset.ytopen130];if(t)start140(t);}},true);
+const show146=showYT130;showYT130=function(items){show146(items);document.querySelectorAll('[data-ytopen130]').forEach(b=>{b.setAttribute('aria-label','Play authorised audio');b.title='Play audio';});};
+render();

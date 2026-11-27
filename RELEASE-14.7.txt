@@ -1,0 +1,2 @@
+14.7.0 Free audio preview
+Existing Audius/Jamendo search and playback retained. Settings adds catalogue diagnostics and user-initiated playback tests. YouTube discovery remains separate; unavailable audio controls disabled when no custom provider is configured. Existing storage keys and discovery backend unchanged. Navidrome direct integration not implemented; local files and authorised direct links remain available. No live provider or iPhone testing performed. Free tiers and provider access may change.

@@ -1,5 +1,5 @@
 // 14.2: conservative catalogue, real chart references, update and library tools.
-const version142='14.3.0', build142='20261127-143';
+const version142='14.4.0', build142='20261127-144';
 const spoken142=/\b(murli|podcasts?|audiobooks?|interviews?|sermons?|lectures?|spoken|speech|documentary|news|tutorial|lesson|meditation|affirmations?|commentary|food chains|do you speak|language learning|radio show|storytelling|guided prayer)\b/i;
 const baseSong142=song123;song123=function(t){return !!t&&!spoken142.test([t.title,t.artist,t.genre].join(' '))&&baseSong142(t)&&(!read('explicit142',false)||t.explicit!==true)};
 const key142=t=>norm105(t.title)+'|'+norm105(t.artist);function dedup142(a){return [...new Map(a.filter(song123).map(t=>[key142(t),t])).values()]}
